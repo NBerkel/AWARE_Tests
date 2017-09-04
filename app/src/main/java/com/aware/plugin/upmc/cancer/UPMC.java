@@ -89,7 +89,7 @@ public class UPMC extends AppCompatActivity {
                             Aware.startScreen(getApplicationContext());
                             Aware.startBattery(getApplicationContext());
                             Aware.startBluetooth(getApplicationContext());
-                            Aware.startAccelerometer(getApplicationContext());
+//                            Aware.startAccelerometer(getApplicationContext());
 
                             Aware.setSetting(getApplicationContext(), Aware_Preferences.WEBSERVICE_WIFI_ONLY, true);
                             Aware.setSetting(getApplicationContext(), Aware_Preferences.WEBSERVICE_FALLBACK_NETWORK, 6);
@@ -155,12 +155,6 @@ public class UPMC extends AppCompatActivity {
         }
 
         if (permissions_ok) {
-            //initialise framework + assign UUID
-            if (!Aware.isServiceRunning(this, Aware.class)) {
-                Intent aware = new Intent(this, Aware.class);
-                startService(aware);
-            }
-
             Aware.setSetting(this, Aware_Preferences.DEBUG_FLAG, debug);
 
             Calendar cal = Calendar.getInstance();

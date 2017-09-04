@@ -26,9 +26,6 @@ public class Plugin extends Aware_Plugin {
 
         TAG = "UPMC Cancer";
 
-        DATABASE_TABLES = Provider.DATABASE_TABLES;
-        TABLES_FIELDS = Provider.TABLES_FIELDS;
-        CONTEXT_URIS = new Uri[]{};
     }
 
     @Override
