@@ -1,10 +1,13 @@
 package com.aware.plugin.upmc.cancer;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +15,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,10 +44,28 @@ import com.aware.utils.PluginsManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static android.support.v4.app.NotificationCompat.PRIORITY_MAX;
+import static android.support.v4.app.NotificationCompat.VISIBILITY_PUBLIC;
+
 public class UPMC extends AppCompatActivity {
 
     private boolean debug = true;
     private static ProgressDialog dialog;
+
+    Intent mServiceIntent;
+    private KeepAlive mSensorService;
+    Context ctx;
+    public Context getCtx() {
+        return ctx;
+    }
+
+    public void test() {
+        // start service if it is not alive
+
+
+        Log.d("Niels", "Test function called");
+
+    }
 
     private void loadSchedule() {
 
@@ -81,6 +103,7 @@ public class UPMC extends AppCompatActivity {
                         applySchedule.putExtra("schedule", true);
                         startService(applySchedule);
 
+                        // Not part of the study yet: join
                         if (!Aware.isStudy(getApplicationContext())) {
                             Aware.joinStudy(getApplicationContext(), "https://api.awareframework.com/index.php/webservice/index/1405/QrdrvuNylRGB");
 
@@ -141,7 +164,7 @@ public class UPMC extends AppCompatActivity {
         REQUIRED_PERMISSIONS.add(Manifest.permission.BLUETOOTH_ADMIN);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            REQUIRED_PERMISSIONS.add(Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            //REQUIRED_PERMISSIONS.add(Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
         }
 
         REQUIRED_PERMISSIONS.add(Manifest.permission.WAKE_LOCK);
@@ -188,6 +211,37 @@ public class UPMC extends AppCompatActivity {
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ctx = this;
+
+        mSensorService = new KeepAlive(getCtx());
+        mServiceIntent = new Intent(getCtx(), mSensorService.getClass());
+        if (!isMyServiceRunning(mSensorService.getClass())) {
+            startService(mServiceIntent);
+        }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(mServiceIntent);
+        Log.i("MAINACT", "onDestroy!");
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onResume();
@@ -210,7 +264,7 @@ public class UPMC extends AppCompatActivity {
             device_label.setText(Aware.getSetting(this, Aware_Preferences.DEVICE_LABEL));
 
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-            mBuilder.setTitle("UPMC Participant");
+            mBuilder.setTitle("Participant");
             mBuilder.setView(participantInfo);
             mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -227,7 +281,9 @@ public class UPMC extends AppCompatActivity {
         }
 
         if (title.equalsIgnoreCase("Sync")) {
+            Log.d("Niels debug", "Hit sync button");
             sendBroadcast(new Intent(Aware.ACTION_AWARE_SYNC_DATA));
+
             return true;
         }
 

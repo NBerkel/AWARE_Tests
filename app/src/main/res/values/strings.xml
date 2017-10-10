@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">UPMC sQoL</string>
-    <string name="rating_intro">Please rate how severe the following symptoms have been <b><u>in the last 12 hours</u></b> from 0 (symptom not present) to 10 (symptom was as bad as you can imagine it could be).</string>
-    <string name="evening_intro">What was the most stressful or negative event you experienced today?</string>
+    <string name="app_name">Tunnetus</string>
     <string name="aware_description">This service makes sure the application is running at all times. Please activate it during the study.</string>
-    <string name="aware_activate_accessibility">Activate UPMC sQoL in the accessibility services.</string>
-    <string name="foreground_notification_text">UPMC software is active.</string>
+    <string name="aware_activate_accessibility">Activate Tunnetus in the accessibility services.</string>
+    <string name="foreground_notification_text">Tunnetus is active.</string>
+
+    <string name="next_question">next</string>
+    <string name="last_question">finish</string>
+    <string name="submit">Submit</string>
+
+    <string name="nrQuestions">of 4</string>
+
+    <string name="PANAS_instructions">Indicate to what extent you feel this way right now.</string>
+    <string name="likertMin">Not at all</string>
+    <string name="likertMax">Extremely</string>
+
+    <string name="Q2_instructions">Repeat the digits in the order in which they were shown. Click "Start" to begin.</string>
+    <string name="Q2_Question">Repeat the digits in the order in which they were shown. </string>
+    <string name="Q2_begin">Start</string>
+
+    <string name="Q3_Question">How many minutes have you used your phone since </string>
 </resources>

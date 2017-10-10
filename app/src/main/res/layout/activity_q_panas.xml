@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/PANAS_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:text="@string/PANAS_instructions"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:id="@+id/PanasItemsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:background="@android:color/darker_gray"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TextViewQuestionX"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorGray"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="1 of 4"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/Q1PANAS_buttonNext"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@color/colorAccent"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/next_question"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
